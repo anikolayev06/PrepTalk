@@ -5,9 +5,8 @@ from pathlib import Path
 import os
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
-GEMINI_MODEL = "gemini-2.5-flash"
 
-INTERVIEWER_ROLE, JOB_DESCRIPTION_CONTEXT, RESUME_CONTEXT, FEEDBACK_REQUEST = system_prompts.load_prompts()
+INTERVIEWER_ROLE, ASK_INTERVIEW_QUESTIONS, JOB_DESCRIPTION_CONTEXT, RESUME_CONTEXT, FEEDBACK_REQUEST = system_prompts.load_prompts()
 
 chat = conversation.Conversation()
 
