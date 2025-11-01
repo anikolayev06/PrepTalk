@@ -84,7 +84,7 @@ def get_interview_feedback() -> Optional[str]:
         The feedback text if available, or None if not.
     """
 
-    pass
+    return prompt_gemini(FEEDBACK_REQUEST)
 
 def start_voice_recording() -> bool:
     """
