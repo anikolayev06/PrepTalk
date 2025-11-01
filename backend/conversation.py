@@ -1,6 +1,8 @@
+from google.genai.types import GenerateContentResponse
 from typing import Optional
 from google import genai
 from pathlib import Path
+import sys
 
 GEMINI_MODEL = "gemini-2.5-flash"
 
@@ -18,13 +20,22 @@ class Conversation:
         input : str
             The prompt text to send to Gemini.
 
+        Raises
+        ------
+        ValueError
+            If the GEMINI_API_KEY is not set.
+        ConnectionError
+            If the connection to the Gemini API fails.
+
         Returns
         -------
         Optional[str]
             The text response from Gemini on success, or None on failure.
         """
 
-        pass
+        response: GenerateContentResponse = self.chat.send_message(input)
+        if not response: return None
+        return response.text
 
     def submit_pdf(self, prompt: str, pdf_path: Path) -> bool:
         """

@@ -1,4 +1,5 @@
 from typing import Optional
+from . import conversation
 from pathlib import Path
 import os
 
@@ -121,7 +122,7 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
     pass
 
 def main():
-    print(GEMINI_API_KEY)
+    
     pass
 
 if __name__ == "__main__":
