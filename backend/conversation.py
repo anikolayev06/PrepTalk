@@ -54,8 +54,6 @@ class Conversation:
             True if the submission was successful, False otherwise.
         """
 
-        filepath = Path(pdf_path)
-
         if not pdf_path.exists() or not pdf_path.is_file():
             return False
     
