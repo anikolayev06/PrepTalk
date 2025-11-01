@@ -4,6 +4,8 @@ from . import conversation
 from pathlib import Path
 import os
 
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
+
 INTERVIEWER_ROLE, ASK_INTERVIEW_QUESTIONS, JOB_DESCRIPTION_CONTEXT, RESUME_CONTEXT, FEEDBACK_REQUEST = system_prompts.load_prompts()
 
 chat = conversation.Conversation()
@@ -123,7 +125,21 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
         The transcribed text if successful, or None on failure.
     """
 
-    pass
+    if not isinstance(audio_path, Path):
+        audio_path = Path(audio_path)
+
+    if not audio_path.exists() or not audio_path.is_file():
+        return None
+    
+    transcription_chat = conversation.Conversation()
+
+    myfile = transcription_chat.client.files.upload(fale=str(audio_path))
+
+    response = transcription_chat.client.models.generate_content(
+        model=conversation.GEMINI_MODEL,
+        contents=["Generate a transcript of the speech.", myfile]
+    )
+    return getattr(response, "text", None)
 
 def main():
     pass
