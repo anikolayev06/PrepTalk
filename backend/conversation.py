@@ -9,7 +9,7 @@ class Conversation:
         self.client = genai.Client()
         self.chat = self.client.chats.create(model=GEMINI_MODEL)
 
-    def prompt_gemini(input: str) -> Optional[str]:
+    def prompt_gemini(self, input: str) -> Optional[str]:
         """
         Send a prompt to the Gemini model and return the text response if successful.
 
@@ -26,7 +26,7 @@ class Conversation:
 
         pass
 
-    def submit_pdf(prompt: str, pdf_path: Path) -> bool:
+    def submit_pdf(self, prompt: str, pdf_path: Path) -> bool:
         """
         Submit a resume PDF for processing.
 
