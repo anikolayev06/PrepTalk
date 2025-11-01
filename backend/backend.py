@@ -1,6 +1,8 @@
-from pathlib import Path
 from typing import Optional
+from pathlib import Path
+import os
 
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
 GEMINI_MODEL = "gemini-2.5-flash"
 
 def prompt_gemini(input: str) -> Optional[str]:
@@ -119,6 +121,7 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
     pass
 
 def main():
+    print(GEMINI_API_KEY)
     pass
 
 if __name__ == "__main__":
