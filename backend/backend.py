@@ -40,7 +40,7 @@ def submit_resume_pdf(pdf_path: Path) -> bool:
         True if the submission was successful, False otherwise.
     """
 
-    pass
+    return chat.submit_pdf(RESUME_CONTEXT, pdf_path)
 
 def submit_job_description(input: str) -> bool:
     """
@@ -57,7 +57,8 @@ def submit_job_description(input: str) -> bool:
         True if the submission was successful, False otherwise.
     """
 
-    pass
+    response = chat.prompt_gemini(f"{JOB_DESCRIPTION_CONTEXT}\n\nJob Description:\n{input}")
+    return bool(response)
 
 def ask_interview_question() -> Optional[str]:
     """
