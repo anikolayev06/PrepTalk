@@ -1,0 +1,119 @@
+from pathlib import Path
+from typing import Optional
+
+GEMINI_MODEL = "gemini-2.5-flash"
+
+def prompt_gemini(input: str) -> Optional[str]:
+    """
+    Send a prompt to the Gemini model and return the text response if successful.
+
+    Parameters
+    ----------
+    input : str
+        The prompt text to send to Gemini.
+
+    Returns
+    -------
+    Optional[str]
+        The text response from Gemini on success, or None on failure.
+    """
+
+    pass
+
+def submit_resume_pdf(pdf_path: Path) -> bool:
+    """
+    Submit a resume PDF for processing.
+
+    Parameters
+    ----------
+    pdf_path : Path
+        The path to the PDF file to submit.
+
+    Returns
+    -------
+    bool
+        True if the submission was successful, False otherwise.
+    """
+
+    pass
+
+def submit_job_description(input: str) -> bool:
+    """
+    Sumbit a job description for processing.
+
+    Parameters
+    ----------
+    input : str
+        The job description text to submit.
+
+    Returns
+    -------
+    bool
+        True if the submission was successful, False otherwise.
+    """
+
+    pass
+
+def ask_interview_question() -> bool:
+    """
+    Ask an interview question.
+
+    Returns
+    -------
+    bool
+        True if the question was asked successfully, False otherwise.
+    """
+    pass
+
+def get_interview_feedback() -> Optional[str]:
+    """
+    Get feedback on an interview.
+
+    Returns
+    -------
+    Optional[str]
+        The feedback text if available, or None if not.
+    """
+
+    pass
+
+def start_voice_recording() -> bool:
+    """
+    Start voice recording.
+
+    Returns
+    -------
+    bool
+        True if the recording started successfully, False otherwise.
+    """
+
+    pass
+
+def stop_voice_recording() -> Optional[Path]:
+    """
+    Stop voice recording.
+
+    Returns
+    -------
+    Optional[Path]
+        The path to the recorded audio file if available, or None if not.
+    """
+
+    pass
+
+def transcribe_audio(audio_path: Path) -> Optional[str]:
+    """
+    Transcribe audio from a given file path.
+
+    Parameters
+    ----------
+    audio_path : Path
+        The path to the audio file to transcribe.
+
+    Returns
+    -------
+    Optional[str]
+        The transcribed text if successful, or None on failure.
+    """
+
+    pass
