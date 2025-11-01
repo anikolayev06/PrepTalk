@@ -61,16 +61,17 @@ def submit_job_description(input: str) -> bool:
 
     pass
 
-def ask_interview_question() -> bool:
+def ask_interview_question() -> Optional[str]:
     """
     Ask an interview question.
 
     Returns
     -------
-    bool
-        True if the question was asked successfully, False otherwise.
+    Optional[str]
+        The question text if available, or None if not.
     """
-    pass
+
+    return prompt_gemini(ASK_INTERVIEW_QUESTIONS)
 
 def get_interview_feedback() -> Optional[str]:
     """
