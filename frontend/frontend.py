@@ -1,13 +1,24 @@
-import sys
+from PyQt6.QtWidgets import QMainWindow, QStackedWidget
+from frontend.upload_page import UploadPage
+from frontend.interview_page import InterviewPage
 
-from PyQt6.QtWidgets import QApplication, QWidget
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Interview Simulator")
+        self.setGeometry(100, 100, 600, 400)
 
-app = QApplication(sys.argv)
+        self.stack = QStackedWidget()
+        self.setCentralWidget(self.stack)
 
-window = QWidget()
-window.setWindowTitle("coms25")
-window.setGeometry(100, 100, 400, 300)
+        self.upload_page = UploadPage(self)
+        self.interview_page = InterviewPage(self)
 
-window.show()
+        self.stack.addWidget(self.upload_page)
+        self.stack.addWidget(self.interview_page)
 
-sys.exit(app.exec())
+        self.stack.setCurrentWidget(self.upload_page)
+
+    def start_interview(self, resume_text, job_text):
+        self.interview_page.load_interview(resume_text, job_text)
+        self.stack.setCurrentWidget(self.interview_page)
