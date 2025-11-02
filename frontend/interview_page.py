@@ -44,7 +44,7 @@ class InterviewPage(QWidget):
     def toggle_recording(self):
         if not self.recording:
             self.record_button.setText("Stop Recording")
-            path = (Path(backend.stop_voice_recording()))
+            path = backend.stop_voice_recording()
             backend.transcribe_audio(path)
             print("Recording started.")
         else:

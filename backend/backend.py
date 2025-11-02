@@ -1,3 +1,4 @@
+from . audio_processes import WhisperTranscriber
 from . audio_processes import Recorder
 from . import system_prompts
 from typing import Optional
@@ -12,6 +13,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
 INTERVIEWER_ROLE, ASK_INTERVIEW_QUESTIONS, JOB_DESCRIPTION_CONTEXT, RESUME_CONTEXT, FEEDBACK_REQUEST = system_prompts.load_prompts()
 
 RECORDER: Recorder = Recorder()
+TRANSCRIBER: WhisperTranscriber = WhisperTranscriber()
 
 TMP_DIR = Path(tempfile.mkdtemp(prefix="interview_recordings_"))
 
@@ -136,7 +138,7 @@ def stop_voice_recording() -> Optional[Path]:
     success = RECORDER.stop_recording(output_path)
     return output_path if success else None
 
-def transcribe_audio(audio_path: Path) -> Optional[str]:
+def transcribe_audio(audio_path: Path) -> str:
     """
     Transcribe audio from a given file path.
 
@@ -147,23 +149,13 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
 
     Returns
     -------
-    Optional[str]
-        The transcribed text if successful, or None on failure.
+    str
+        The transcribed text
     """
 
-    if not audio_path.exists() or not audio_path.is_file():
-        return None
-    
-    transcription_chat = conversation.Conversation()
+    transcription: str = TRANSCRIBER.transcribe(audio_path)
 
-    myfile = transcription_chat.client.files.upload(fale=str(audio_path))
-
-    response = transcription_chat.client.models.generate_content(
-        model=conversation.GEMINI_MODEL,
-        contents=["Generate a transcript of the speech.", myfile]
-    )
-
-    return getattr(response, "text", None)
+    return transcription
 
 def initialize():
     success = prompt_gemini(INTERVIEWER_ROLE)
@@ -176,6 +168,35 @@ def deinitialize():
         shutil.rmtree(TMP_DIR)
 
 def main():
+    # audio_path: Path = TMP_DIR / "test.wav"
+
+    # recstart_success: bool = RECORDER.start_recording()
+
+    # if recstart_success == False:
+    #     print("Error starting audio recording.")
+    #     return
+    
+    # print("Recording audio...")
+    
+    # import time
+    # time.sleep(5)  # Record for 5 seconds
+
+    # recording_success: bool = RECORDER.stop_recording(audio_path)
+
+    # if recording_success == False: 
+    #     print("Error generating audio file.")
+    #     return
+    
+    # print("Audio recording stopped.")
+
+    # transcript: Optional[str] = transcribe_audio(audio_path)
+
+    # if not transcript:
+    #     print("Error transcribing audio.")
+    #     return
+    
+    # print(f"Transcription: {transcript}")
+
     pass
 
 if __name__ == "__main__":

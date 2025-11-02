@@ -9,12 +9,43 @@ AI Assistant: GitHub Copilot (Claude Sonnet 4.5)
 """
 
 from threading import Thread
-from typing import Optional
 from pathlib import Path
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
+import whisper
+import torch
 import time
+
+WHISPER_MODEL_SIZE = "medium"
+
+class WhisperTranscriber:
+    """
+    Audio transcriber class using OpenAI's Whisper model.
+    """
+
+    def __init__(self, model_size: str = WHISPER_MODEL_SIZE):
+        """Initialize the WhisperTranscriber with the specified model size."""
+        
+        self.model: whisper.Whisper = whisper.load_model(WHISPER_MODEL_SIZE)
+
+    def transcribe(self, audio_path: Path) -> str:
+        """
+        Transcribe the audio file at the given path.
+
+        Parameters
+        ----------
+        audio_path : Path
+            The path to the audio file to transcribe.
+
+        Returns
+        -------
+        str
+            The transcribed text.
+        """
+
+        result = self.model.transcribe(str(audio_path))
+        return result.get("text", "")
 
 class Recorder:
     """
@@ -118,6 +149,7 @@ class Recorder:
         """
 
         if not self.is_recording:
+            print("not recording")
             return False
             
         try:
@@ -127,6 +159,7 @@ class Recorder:
                 self.recordingThread.join(timeout=2.0)  # Add timeout
             
             if not self.audio_data:
+                print("No audio data captured.")
                 return False
                 
             audio_array = np.concatenate(self.audio_data, axis=0)
@@ -135,4 +168,5 @@ class Recorder:
             duration = len(audio_array) / self.sample_rate
             return True
         except Exception as e:
+            print(f"Error stopping recording: {e}")
             return False
