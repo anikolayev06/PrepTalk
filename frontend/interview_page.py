@@ -114,13 +114,6 @@ class InterviewPage(QWidget):
             else:
                 print("Recording stopped.")
 
-            transcript = backend.transcribe_audio(path)
-            print(f"Transcript: {transcript}")
-
-            result = backend.answer_interview_question(transcript)
-            print(f"AI Response: {result}")
-
-            self.question_label.setText(result or "No response received.")
             self.question_label.adjustSize()
 
         self.recording = not self.recording
@@ -132,6 +125,8 @@ class InterviewPage(QWidget):
         if self.current_question_index < self.total_questions - 1:
             self.current_question_index += 1
             self.update_question_display()
+        if self.current_question_index == self.total_questions - 2:
+            self.next_button = QPushButton("Get Feedback")
         else:
             self.next_button.hide()
             self.record_button.hide()
