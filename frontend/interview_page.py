@@ -1,3 +1,13 @@
+"""
+Interview page for PrepTalk frontend.
+
+This module was developed with assistance from AI tools (GitHub Copilot/Claude).
+AI was used for code generation, documentation, debugging, and optimization.
+
+Date: November 2, 2025
+AI Assistant: GitHub Copilot (Claude Sonnet 4.5)
+"""
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel, QPushButton, QSizePolicy, QScrollArea
@@ -5,7 +15,14 @@ from PyQt6.QtWidgets import (
 from backend import backend
 
 class InterviewPage(QWidget):
+    """
+    Page for conducting the mock interview, handling questions, recording, and feedback.
+    """
+
     def __init__(self, parent=None):
+        """
+        Initialize the interview page UI and state.
+        """
         super().__init__(parent)
         self.parent = parent
         self.recording = False
@@ -59,6 +76,16 @@ class InterviewPage(QWidget):
         self.setLayout(layout)
 
     def load_interview(self, resume, job):
+        """
+        Load the interview with provided resume and job description, and initialize questions.
+
+        Parameters
+        ----------
+        resume : str
+            The candidate's resume text or path.
+        job : str
+            The job description text.
+        """
         self.resume = resume
         self.job = job
 
@@ -67,6 +94,9 @@ class InterviewPage(QWidget):
         self.update_question_display()
 
     def toggle_recording(self):
+        """
+        Start or stop audio recording and handle transcript/AI response.
+        """
         if not self.recording:
             self.record_button.setText("Stop Recording")
             start_rec_success: bool = backend.start_voice_recording()
@@ -96,6 +126,9 @@ class InterviewPage(QWidget):
         self.recording = not self.recording
 
     def next_question(self):
+        """
+        Move to the next interview question, or show feedback if finished.
+        """
         if self.current_question_index < self.total_questions - 1:
             self.current_question_index += 1
             self.update_question_display()
@@ -107,6 +140,9 @@ class InterviewPage(QWidget):
             self.question_label.adjustSize()
 
     def update_question_display(self):
+        """
+        Update the question label to show the current interview question.
+        """
         question = self.questions[self.current_question_index]
         self.question_label.setText(
             f"Question {self.current_question_index + 1} of {self.total_questions}:\n\n{question}"

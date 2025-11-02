@@ -1,3 +1,13 @@
+"""
+PrepTalk frontend application entry point.
+
+This module was developed with assistance from AI tools (GitHub Copilot/Claude).
+AI was used for code generation, documentation, debugging, and optimization.
+
+Date: November 2, 2025
+AI Assistant: GitHub Copilot (Claude Sonnet 4.5)
+"""
+
 import sys
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QFont
@@ -5,8 +15,10 @@ from PyQt6.QtGui import QFont
 from backend.backend import initialize, deinitialize
 from frontend.frontend import MainWindow
 
-
 def main():
+    """
+    Entry point for PrepTalk frontend. Sets up Qt app, styles, and launches main window.
+    """
     initialize()
     app = QApplication(sys.argv)
 
@@ -130,7 +142,6 @@ def main():
 
     sys.exit(app.exec())
     deinitialize()
-
 
 if __name__ == "__main__":
     main()

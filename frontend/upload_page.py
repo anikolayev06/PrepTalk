@@ -1,3 +1,13 @@
+"""
+Resume and Job Description upload page for PrepTalk frontend.
+
+This module was developed with assistance from AI tools (GitHub Copilot/Claude).
+AI was used for code generation, documentation, debugging, and optimization.
+
+Date: November 2, 2025
+AI Assistant: GitHub Copilot (Claude Sonnet 4.5)
+"""
+
 from PyQt6.QtGui import QColor, QFont
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel, QPushButton, QTextEdit,
@@ -9,7 +19,14 @@ from backend import backend
 from pathlib import Path
 
 class UploadPage(QWidget):
+    """
+    Page for uploading resume (PDF) and job description.
+    """
+
     def __init__(self, parent=None):
+        """
+        Initialize the upload page UI.
+        """
         super().__init__(parent)
         self.job_input = None
         self.parent = parent
@@ -17,6 +34,9 @@ class UploadPage(QWidget):
         self.init_ui()
 
     def init_ui(self):
+        """
+        Set up the UI elements and layout for the upload page.
+        """
         self.setStyleSheet("background-color: #0f172a; color: #e2e8f0; font-family: 'Segue UI';")
 
         main_layout = QVBoxLayout(self)
@@ -125,6 +145,10 @@ class UploadPage(QWidget):
         main_layout.addWidget(card)
 
     def select_pdf(self):
+        """
+        Open a file dialog for the user to select a resume PDF file.
+        Updates label and stores path.
+        """
         file_dialog = QFileDialog(self)
         file_dialog.setNameFilter("PDF files (*.pdf)")
         file_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
@@ -137,6 +161,9 @@ class UploadPage(QWidget):
                 print(f"Selected PDF path: {self.resume_path}")
 
     def start_interview(self):
+        """
+        Validate inputs and start the interview flow, submitting resume and job description.
+        """
         job_text = self.job_input.toPlainText()
 
         if not self.resume_path:
