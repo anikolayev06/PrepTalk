@@ -4,6 +4,7 @@ cachetools==6.2.1
 certifi==2025.10.5
 cffi==2.0.0
 charset-normalizer==3.4.4
+cryptography==46.0.3
 google-auth==2.42.1
 google-genai==1.47.0
 h11==0.16.0
@@ -11,11 +12,15 @@ httpcore==1.0.9
 httpx==0.28.1
 idna==3.11
 numpy==2.3.4
+pdfminer.six==20250506
+pdfplumber==0.11.7
+pillow==12.0.0
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
 pycparser==2.23
 pydantic==2.12.3
 pydantic_core==2.41.4
+pypdfium2==5.0.0
 PyQt6==6.10.0
 PyQt6-Qt6==6.10.0
 PyQt6_sip==13.10.2
