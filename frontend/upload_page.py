@@ -1,15 +1,17 @@
 from PyQt6.QtGui import QColor, QFont
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel, QPushButton, QTextEdit,
-    QFileDialog, QFrame
+    QFileDialog, QFrame, QGraphicsDropShadowEffect
 )
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QGraphicsDropShadowEffect
 import os
+from backend import backend
+from pathlib import Path
 
 class UploadPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.job_input = None
         self.parent = parent
         self.resume_path = None
         self.init_ui()
@@ -40,7 +42,6 @@ class UploadPage(QWidget):
         layout.setSpacing(15)
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # --- Title ---
         title = QLabel("AI Interview Simulator")
         title.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -128,8 +129,17 @@ class UploadPage(QWidget):
 
     def start_interview(self):
         job_text = self.job_input.toPlainText()
+
         if not self.resume_path:
             self.resume_label.setText("Please upload a resume before starting.")
             return
+
+        if not job_text.strip():
+            self.resume_label.setText("Please paste a job description before starting.")
+            return
+
+        backend.submit_resume_pdf(Path(self.resume_path))
+        backend.submit_job_description(job_text)
+
         if self.parent:
             self.parent.start_interview(self.resume_path, job_text)

@@ -1,6 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
-from backend.backend import prompt_gemini
+import backend
+from backend import backend
 
 class InterviewPage(QWidget):
     def __init__(self, parent=None):
@@ -9,6 +10,9 @@ class InterviewPage(QWidget):
         self.recording = False
         self.resume = ""
         self.job = ""
+        self.current_question_index = 0
+        self.total_questions = 5
+        self.questions = []
 
         layout = QVBoxLayout()
 
@@ -30,7 +34,11 @@ class InterviewPage(QWidget):
     def load_interview(self, resume, job):
         self.resume = resume
         self.job = job
-        self.question_label.setText("Question1")
+
+        self.questions = [backend.ask_interview_question() for _ in range(self.total_questions)]
+
+        self.current_question_index = 0
+        self.update_question_display()
 
     def toggle_recording(self):
         if not self.recording:
@@ -42,4 +50,13 @@ class InterviewPage(QWidget):
         self.recording = not self.recording
 
     def next_question(self):
-        self.question_label.setText("Question2")
+        if self.current_question_index < self.total_questions - 1:
+            self.current_question_index += 1
+            self.update_question_display()
+        else:
+            self.next_button.hide()
+            self.question_label.setText("Interview complete! Great job!")
+
+    def update_question_display(self):
+        question = self.questions[self.current_question_index]
+        self.question_label.setText(f"Question {self.current_question_index + 1} of {self.total_questions}:\n\n{question}")
