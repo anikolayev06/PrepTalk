@@ -2,6 +2,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
 import backend
 from backend import backend
+from pathlib import Path
 
 class InterviewPage(QWidget):
     def __init__(self, parent=None):
@@ -43,7 +44,7 @@ class InterviewPage(QWidget):
     def toggle_recording(self):
         if not self.recording:
             self.record_button.setText("Stop Recording")
-            path = backend.stop_voice_recording()
+            path = (Path(backend.stop_voice_recording()))
             backend.transcribe_audio(path)
             print("Recording started.")
         else:
