@@ -59,7 +59,7 @@ def submit_job_description(input: str) -> bool:
         True if the submission was successful, False otherwise.
     """
 
-    response = chat.prompt_gemini(f"{JOB_DESCRIPTION_CONTEXT}\n\nJob Description:\n{input}")
+    response = chat.prompt_gemini(f"{JOB_DESCRIPTION_CONTEXT}\n{input}")
     return bool(response)
 
 def ask_interview_question() -> Optional[str]:
@@ -154,6 +154,9 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
         contents=["Generate a transcript of the speech.", myfile]
     )
     return getattr(response, "text", None)
+
+def initialize():
+    prompt_gemini(INTERVIEWER_ROLE)
 
 def main():
     pass
