@@ -1,12 +1,19 @@
+from . audio_processes import Recorder
 from . import system_prompts
 from typing import Optional
 from . import conversation
 from pathlib import Path
+import tempfile
+import shutil
 import os
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
 
 INTERVIEWER_ROLE, ASK_INTERVIEW_QUESTIONS, JOB_DESCRIPTION_CONTEXT, RESUME_CONTEXT, FEEDBACK_REQUEST = system_prompts.load_prompts()
+
+RECORDER: Recorder = Recorder()
+
+TMP_DIR = Path(tempfile.mkdtemp(prefix="interview_recordings_"))
 
 chat = conversation.Conversation()
 
@@ -113,7 +120,7 @@ def start_voice_recording() -> bool:
         True if the recording started successfully, False otherwise.
     """
 
-    pass
+    return RECORDER.start_recording()
 
 def stop_voice_recording() -> Optional[Path]:
     """
@@ -125,7 +132,9 @@ def stop_voice_recording() -> Optional[Path]:
         The path to the recorded audio file if available, or None if not.
     """
 
-    pass
+    output_path = TMP_DIR / "answer.wav"
+    success = RECORDER.stop_recording(output_path)
+    return output_path if success else None
 
 def transcribe_audio(audio_path: Path) -> Optional[str]:
     """
@@ -161,6 +170,10 @@ def initialize():
 
     if not success:
         raise RuntimeError("Failed to initialize Gemini conversation with system prompt.")
+
+def deinitialize():
+    if TMP_DIR.exists() and TMP_DIR.is_dir():
+        shutil.rmtree(TMP_DIR)
 
 def main():
     pass
