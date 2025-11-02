@@ -1,8 +1,11 @@
 import sys
 from PyQt6.QtWidgets import QApplication
+
+from backend.backend import initialize
 from frontend.frontend import MainWindow
 
 def main():
+    initialize()
     app = QApplication(sys.argv)
     app.setStyleSheet("""
         QWidget {
