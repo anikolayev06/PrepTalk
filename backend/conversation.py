@@ -1,9 +1,8 @@
 from google.genai.types import GenerateContentResponse
-from google.genai import types
-from google import genai
 from typing import Optional
 from google import genai
 from pathlib import Path
+import pdfplumber
 import os
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY_COMS25")
@@ -61,15 +60,16 @@ class Conversation:
         if pdf_path.suffix.lower() != ".pdf":
             return False
 
-        response = self.client.models.generate_content(
-             model=GEMINI_MODEL,
-             contents=[
-                 types.Part.from_bytes(
-                     data=pdf_path.read_bytes(),
-                     mime_type="application/pdf",
-                ),
-                 prompt
-            ],
-        )
-        
-        return bool(getattr(response, "text", None))
+        full_pdf_text: str = ""
+
+        try:
+            text: list = []
+            with pdfplumber.open(pdf_path) as pdf:
+                for page in pdf.pages:
+                    text.append(page.extract_text() or "")
+            full_pdf_text = "\n".join(text)
+        except Exception as e:
+            return False
+
+        response = self.prompt_gemini(f"{prompt}\n{full_pdf_text}")
+        return bool(response)

@@ -113,7 +113,7 @@ def start_voice_recording() -> bool:
         True if the recording started successfully, False otherwise.
     """
 
-    
+    pass
 
 def stop_voice_recording() -> Optional[Path]:
     """
@@ -153,10 +153,14 @@ def transcribe_audio(audio_path: Path) -> Optional[str]:
         model=conversation.GEMINI_MODEL,
         contents=["Generate a transcript of the speech.", myfile]
     )
+
     return getattr(response, "text", None)
 
 def initialize():
-    prompt_gemini(INTERVIEWER_ROLE)
+    success = prompt_gemini(INTERVIEWER_ROLE)
+
+    if not success:
+        raise RuntimeError("Failed to initialize Gemini conversation with system prompt.")
 
 def main():
     pass
