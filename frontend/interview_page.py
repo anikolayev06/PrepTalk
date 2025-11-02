@@ -4,6 +4,9 @@ import backend
 from backend import backend
 from pathlib import Path
 
+from backend.backend import answer_interview_question
+
+
 class InterviewPage(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -45,7 +48,7 @@ class InterviewPage(QWidget):
         if not self.recording:
             self.record_button.setText("Stop Recording")
             path = backend.stop_voice_recording()
-            backend.transcribe_audio(path)
+            answer_interview_question(backend.transcribe_audio(path))
             print("Recording started.")
         else:
             self.record_button.setText("Start Recording")
