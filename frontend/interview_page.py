@@ -125,8 +125,6 @@ class InterviewPage(QWidget):
         if self.current_question_index < self.total_questions - 1:
             self.current_question_index += 1
             self.update_question_display()
-        if self.current_question_index == self.total_questions - 2:
-            self.next_button = QPushButton("Get Feedback")
         else:
             self.next_button.hide()
             self.record_button.hide()
