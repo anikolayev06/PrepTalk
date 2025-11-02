@@ -52,9 +52,18 @@ class InterviewPage(QWidget):
         else:
             self.record_button.setText("Start Recording")
             path = backend.stop_voice_recording()
-            result = backend.answer_interview_question(backend.transcribe_audio(path))
+            if not path:
+                print("Error: No audio recorded.")
+                self.question_label.setText("Error: No audio recorded.")
+                return
+
             print("Recording stopped.")
-            self.question_label.setText(result)
+            transcript = backend.transcribe_audio(path)
+            print(f"Transcript: {transcript}")
+
+            result = backend.answer_interview_question(transcript)
+            print(f"AI Response: {result}")
+            self.question_label.setText(result or "No response received.")
         self.recording = not self.recording
 
     def next_question(self):
