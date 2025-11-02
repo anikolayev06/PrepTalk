@@ -91,7 +91,7 @@ class Recorder:
             self.is_recording = False
             return False
         
-    def stop_recording(self, output_path: Path) -> Path:
+    def stop_recording(self, output_path: Path) -> bool:
         """
         Stop recording and save the captured audio to a WAV file.
         
