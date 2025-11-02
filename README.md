@@ -91,6 +91,13 @@ To use Interview Practice AI:
 - **Transcription errors:** Ensure FFmpeg is installed correctly.
 - **API errors:** Verify your Gemini API key is valid and has sufficient quota.
 
+## Credits
+
+Original Authors:
+- [an3480-RIT](https://github.com/an3480-RIT)
+- [csn1296](https://github.com/csn1296)
+- [Maddox-RVS](https://github.com/Maddox-RVS)
+
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License with Attribution Requirements. See the [LICENSE](LICENSE) file for details. All forks must include proper attribution to the original authors.
